@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-test
+spec:
+  selector:
+    app: flask-test
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 6000
+      targetPort: 5000
+      nodePort: 30001
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-test
+spec:
+  selector:
+    matchLabels:
+      app: flask-test
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: flask-test
+    spec:
+      containers:
+        - name: flask-test
+          image: docker.io/moskst/minikube-flask-app
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+
+--- 
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: flask-test
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    alb.ingress.kubernetes.io/scheme: internet-facing
+  labels:
+    app: flask-test
+spec:
+  - host: fask.localdev.me
+    backend:
+      path: /
+      pathType: Prefix
+      service:
+        name: flask-test
+        port: 
+          number: 80
