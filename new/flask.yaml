@@ -13,7 +13,7 @@ metadata:
   name: flask
   namespace: flask
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: flask
   ports:
