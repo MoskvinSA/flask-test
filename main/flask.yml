@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
         - name: flask-test
-          image: docker.io/moskst/minikube-flask-app
+          image: docker.io/moskst/minikube-flask-app:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5000
