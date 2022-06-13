@@ -13,7 +13,7 @@ metadata:
   name: flask
   namespace: flask
 spec:
-  type: NodePort
+  #type: NodePort
   selector:
     app: flask
   ports:
@@ -21,7 +21,7 @@ spec:
       protocol: TCP
       port: 80
       targetPort: 80
-      nodePort: 30001
+      #nodePort: 30001
 
 ---
 apiVersion: apps/v1
@@ -54,7 +54,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: flask.localdomain.me
+  - host: flask.localdev.me
     http:
       paths:
       - backend:
@@ -62,5 +62,5 @@ spec:
             name: flask
             port:
               number: 80
-        path: /flask
+        path: /
         pathType: Prefix
