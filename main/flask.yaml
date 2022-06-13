@@ -7,9 +7,10 @@ spec:
     app: flask-test
   type: LoadBalancer
   ports:
-    - protocol: TCP
-      port: 6000
-      targetPort: 5000
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
       nodePort: 30001
 
 ---
@@ -32,8 +33,7 @@ spec:
           image: docker.io/moskst/minikube-flask-app:latest
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 5000
-
+            - containerPort: 80
 --- 
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -41,13 +41,15 @@ metadata:
   name: flask-test
   namespace: flask-test
 spec:
-  - host: fask.localdev.me
+  ingressClassName: nginx
+  rules:
+  - host: flask.localdev.me
     http:
       paths:
-        - backend:
-            service:
-              name: flask-test
-              port: 
-                number: 80
-          path: /
-          pathType: Prefix
+      - backend:
+          service:
+            name: flask-test
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
