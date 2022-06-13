@@ -43,22 +43,22 @@ spec:
           image: docker.io/moskst/minikube-flask-app:latest
           ports:
             - containerPort: 80
---- 
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: flask
-  namespace: flask
-spec:
-  ingressClassName: nginx
-  rules:
-  - host: flask.localdomain.me
-    http:
-      paths:
-      - backend:
-          service:
-            name: flask
-            port:
-              number: 80
-        path: /flask
-        pathType: Prefix
+#--- 
+#apiVersion: networking.k8s.io/v1
+#kind: Ingress
+#metadata:
+#  name: flask
+#  namespace: flask
+#spec:
+#  ingressClassName: nginx
+#  rules:
+#  - host: flask.localdomain.me
+#    http:
+#      paths:
+#      - backend:
+#          service:
+#            name: flask
+#            port:
+#              number: 80
+#        path: /flask
+#        pathType: Prefix
