@@ -33,8 +33,8 @@ spec:
   selector:
     matchLabels:
       app: flask
-  replicas: 3
-  revisionHistoryLimit: 3
+  replicas: 2
+  revisionHistoryLimit: 2
   template:
     metadata:
       labels:
